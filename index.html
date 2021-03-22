@@ -1,0 +1,92 @@
+---
+# Feel free to add content and custom Front Matter to this file.
+# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+
+layout: home
+title: Home
+---
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{ page.title }}</title>
+  </head>
+  <body>
+    <section class="container">
+      <div >
+          <div>
+            <ul>
+              {% for post in paginator.posts %}
+              <li>
+                <h3 class="post-list-title">
+                  <a href="{{ post.url }}">{{ post.title }}</a>
+                </h3>
+                <p class="post-list-excerpt" >
+                  {{ post.excerpt | strip_html | strip }}
+                </p>
+                <p class="post-list-ext-info">
+                    <span class="post-ext-info">
+                        <span class="octicon octicon-calendar"></span>{{ post.date | date: "%Y/%m/%d" }}
+                        {% for category in post.categories %}
+                    </span>
+                    <span class="post-ext-info">
+                      <span class="octicon octicon-file-directory"></span>
+                      <a href="{{ site.url }}/categories/#{{ category }}" title="{{ category }}">{{ category }}</a>
+                    </span>
+                    {% endfor %}
+                </p>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+      </div>
+        <div class="pagination text-align">
+            <div class="btn-group">
+                {% if paginator.previous_page %}
+                {% if paginator.previous_page == 1 %}
+                <a href="{{ site.url }}/" class="btn btn-outline">&laquo;</a>
+                {% else %}
+                <a href="{{ site.url }}/page{{paginator.previous_page}}"  class="btn btn-outline">&laquo;</a>
+                {% endif %}
+                {% else %}
+                <button disabled="disabled" href="javascript:;" class="btn btn-outline">&laquo;</button>
+                {% endif %}
+                {% if paginator.page == 1 %}
+                <a href="javascript:;" class="active btn btn-outline">1</a>
+                {% else %}
+                <a href="{{ site.url }}/"  class="btn btn-outline">1</a>
+                {% endif %}
+                {% for count in (2..paginator.total_pages) %}
+                {% if count == paginator.page %}
+                <a href="javascript:;"  class="active btn btn-outline">{{count}}</a>
+                {% else %}
+                <a href="{{ site.url }}/page{{count}}"  class="btn btn-outline">{{count}}</a>
+                {% endif %}
+                {% endfor %}
+                {% if paginator.next_page %}
+                <a href="{{ site.url }}/page{{paginator.next_page}}"  class="btn btn-outline">&raquo;</a>
+                {% else %}
+                <button disabled="disabled" href="javascript:;" class="btn btn-outline">&raquo;</button>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+  </body>
+
+<style>
+    .container{
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .post-list-excerpt{
+        color: gray;
+        font-size: 14px;
+    }
+    .post-list-ext-info{
+        color: gray;
+        font-size: 10px;
+    }
+    .post-ext-info {
+        margin-right: 10px;
+    }
+</style>
+</html>
